@@ -1,11 +1,9 @@
 const jwt = require("jsonwebtoken");
+
 const verifyToken = (req, res, next) => {
-
-    // Pega o valor do cabeçalho 'Authorization' da requisição
-    const authHeader = req.headers["authorization"];
-
-    // O token vem no formato 'Bearer TOKEN', então separamos para pegar apenas o TOKEN
-    const token = authHeader && authHeader.split(" ")[1];
+    //MUDANÇA CRÍTICA: BUSCAR O TOKEN NO COOKIE 'jwt'
+    // O cookie 'jwt' é preenchido pelo navegador graças ao 'withCredentials'
+    const token = req.cookies.jwt;
 
     // Se não houver token, o acesso é negado com o código 401 (Unauthorized)
     if (!token)
